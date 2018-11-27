@@ -6,12 +6,18 @@ window.onload = function () {
     canvas.width = innerWidth;
     canvas.height = innerHeight;
 
+    //borders 
+    //;
+
+    // todo Upload page 
+
     var snoop = new Rapper("./Rappers_faces/snoop.png", window.innerWidth - 100, window.innerHeight - 100, 100, 100);
-    var weed = new Rapper ("./Rappers_faces/weed.png", window.innerWidth - 100, window.innerHeight - 100, 100, 100)
+    var weed = new Rapper("./Rappers_faces/weed.png", window.innerWidth - 100, window.innerHeight - 100, 100, 100)
     var rapperArray = [];
     var imgrapper = ["./Rappers_faces/nas.png", "./Rappers_faces/weed.png", "./Rappers_faces/biggie.png", "./Rappers_faces/jay_z.png", "./Rappers_faces/ice_cube.png", "./Rappers_faces/tupac.png", "./Rappers_faces/dr-dre.png", "./Rappers_faces/drake.png", "./Rappers_faces/kanye.png", "./Rappers_faces/ll-cool-j.png"]
     var imgrapperwidth = 100;
     var imgrapperheight = 100;
+    // var gameOverNotify = document.querySelector('.game-over-notify')
 
 
     for (var i = 0; i < imgrapper.length; i++) {
@@ -46,7 +52,7 @@ window.onload = function () {
 
         for (var i = 0; i < rapperArray.length; i++) {
             var rapper = rapperArray[i]
-            //         ctx.drawImage(imgrapper[i], imgrapper[i].x, imgrapper[i].y, imgrapper[i].width, imgrapper[i].height);}
+            // ctx.draw(imgrapper[i], imgrapper[i].x, imgrapper[i].y, imgrapper[i].width, imgrapper[i].height);}
 
             //speed   
             if (frameCounter % 600 == 0) {
@@ -83,18 +89,21 @@ window.onload = function () {
             ctx.drawImage(rapper.img, rapper.x, rapper.y, rapper.width, rapper.height)
         }
 
-        if (weedTime && audio.currentTime > weedTime) {
-            console.log('audio.currentTime', audio.currentTime, weedTime)
-            console.log("weed time")
-            ctx.drawImage(weedImage.img, weedImage.x, weedImage.y, 300, 300)
-        }
+        // if (weedTime && audio.currentTime > weedTime) {
+        //     console.log('audio.currentTime', audio.currentTime, weedTime)
+        //     console.log("weed time")
+        //     ctx.drawImage(weedImage.img, weedImage.x, weedImage.y, 100, 100)
+        // }
 
         console.log('audio.currentTime', audio.currentTime, weedTime)
         ctx.drawImage(snoop.img, snoop.x, snoop.y, snoop.width, snoop.height)
 
-        // Upload page 
 
         window.requestAnimationFrame(updateCanvas);
+
+        //ctx.strokeStyle = "green";
+        //ctx.lineWidth = 10;
+        //ctx.strokeRect(0, 0, 1390, 700)
     }
     updateCanvas();
 
@@ -115,6 +124,7 @@ window.onload = function () {
             console.log("You pressed RIGHT!");
             snoop.x += 10;
         }
+
     })
 }
 
