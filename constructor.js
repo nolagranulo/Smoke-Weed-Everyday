@@ -9,7 +9,6 @@ class Rapper {
         this.speed = 5;
         this.dx = 1;
         this.dy = 1;
-        
     }
     
     rightBorder() {

@@ -12,9 +12,9 @@ window.onload = function () {
     // todo Upload page 
 
     var snoop = new Rapper("./Rappers_faces/snoop.png", window.innerWidth - 100, window.innerHeight - 100, 100, 100);
-    var weed = new Rapper("./Rappers_faces/weed.png", window.innerWidth - 100, window.innerHeight - 100, 100, 100)
+    var weed = new Rapper("./Rappers_faces/weed.png", 0, 0, 100, 100)
     var rapperArray = [];
-    var imgrapper = ["./Rappers_faces/nas.png", "./Rappers_faces/weed.png", "./Rappers_faces/biggie.png", "./Rappers_faces/jay_z.png", "./Rappers_faces/ice_cube.png", "./Rappers_faces/tupac.png", "./Rappers_faces/dr-dre.png", "./Rappers_faces/drake.png", "./Rappers_faces/kanye.png", "./Rappers_faces/ll-cool-j.png"]
+    var imgrapper = ["./Rappers_faces/nas.png", "./Rappers_faces/biggie.png", "./Rappers_faces/jay_z.png", "./Rappers_faces/ice_cube.png", "./Rappers_faces/tupac.png", "./Rappers_faces/dr-dre.png", "./Rappers_faces/drake.png", "./Rappers_faces/kanye.png", "./Rappers_faces/ll-cool-j.png"]
     var imgrapperwidth = 100;
     var imgrapperheight = 100;
     // var gameOverNotify = document.querySelector('.game-over-notify')
@@ -28,21 +28,21 @@ window.onload = function () {
         rapperArray.push(new Rapper(imgrapper[i], randomX, randomY, imgrapperwidth, imgrapperheight));
 
     }
+    rapperArray.push(weed)
 
     var frameCounter = 0
     var speed = 1
 
     // AUDIO
     var audio = new Audio('audio/track.mp3');
-    // audio.preload = "metadata”;
-    var weedTime = null;
+    var weedTime;
 
     audio.onloadedmetadata = function () {
         console.log("Playing " + audio.src + ", for: " + audio.duration + "seconds.");
         audio.play();
         console.log("audio.duration", audio.duration)
         // todo real end time
-        weedTime = audio.duration - 160;
+        weedTime = audio.duration - 2;
         console.log("weedTime", weedTime)
     };
 
@@ -84,30 +84,37 @@ window.onload = function () {
                 rapper.dy = - rapper.dy
             }
 
-            //rapperArray.push(rapper);
-            //console.log(rapperArray);
-            ctx.drawImage(rapper.img, rapper.x, rapper.y, rapper.width, rapper.height)
-        }
+            ctx.drawImage(rapper.img, rapper.x, rapper.y, rapper.width, rapper.height);
+            if (
+                intersect(
+                    { x: snoop.x, y: snoop.y, width: snoop.width, height: snoop.height },
+                    { x: rapper.x, y: rapper.y, width: rapper.width, height: rapper.height },
+                )
+            ) { 
+                if (rapper == weed) {
+                    if (audio.currentTime == weedTime) {
 
-        // if (weedTime && audio.currentTime > weedTime) {
-        //     console.log('audio.currentTime', audio.currentTime, weedTime)
-        //     console.log("weed time")
-        //     ctx.drawImage(weedImage.img, weedImage.x, weedImage.y, 100, 100)
-        // }
+                    } else {
+                        alert("game over")
+                    }                                
+                }
+                rapperArray.splice(i, 1) 
+            };
+        }  
 
-        console.log('audio.currentTime', audio.currentTime, weedTime)
-        ctx.drawImage(snoop.img, snoop.x, snoop.y, snoop.width, snoop.height)
-
-
-        window.requestAnimationFrame(updateCanvas);
+        // console.log('audio.currentTime', audio.currentTime, weedTime)
+        ctx.drawImage(snoop.img, snoop.x, snoop.y, snoop.width, snoop.height)        
 
         //ctx.strokeStyle = "green";
         //ctx.lineWidth = 10;
         //ctx.strokeRect(0, 0, 1390, 700)
-    }
-    updateCanvas();
 
-    console.log("test");
+
+        window.requestAnimationFrame(updateCanvas);
+
+    }
+    updateCanvas()
+
     window.addEventListener("keydown", (e) => {
         console.log(e.keyCode);
 
@@ -129,4 +136,25 @@ window.onload = function () {
 }
 
 
+function intersect(a, b) {
+    var imgAL = a.x;
+    var imgAT = a.y;
+    var imgAR = a.x + a.width;
+    var imgAB = a.y + a.height;
 
+    var imgBL = b.x;
+    var imgBT = b.y;
+    var imgBR = b.x + b.width;
+    var imgBB = b.y + b.height;
+
+    if (!(imgAL > imgBR ||
+        imgAR < imgBL ||
+        imgAT > imgBB ||
+        imgAB < imgBT)) {
+        console.log("hit")
+    }
+    return !(imgAL > imgBR ||
+        imgAR < imgBL ||
+        imgAT > imgBB ||
+        imgAB < imgBT)
+}
