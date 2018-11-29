@@ -5,16 +5,22 @@ window.onload = function () {
     var innerHeight = 720;
     canvas.width = innerWidth;
     canvas.height = innerHeight;
+    var gameover = false;
 
-    //borders 
-    //;
+    var bgImg = new Image();
+    bgImg.src = './css/smokeWeed.png';
 
-    // todo Upload page 
+    function drawBg(){
+        bgImg.onload = ctx.drawImage(bgImg,0,0, canvas.width,canvas.height);
+    }
+
+
+
 
     var snoop = new Rapper("./Rappers_faces/snoop.png", window.innerWidth - 100, window.innerHeight - 100, 100, 100);
     var weed = new Rapper("./Rappers_faces/weed.png", 0, 0, 100, 100)
     var rapperArray = [];
-    var imgrapper = ["./Rappers_faces/nas.png", "./Rappers_faces/biggie.png", "./Rappers_faces/jay_z.png", "./Rappers_faces/ice_cube.png", "./Rappers_faces/tupac.png", "./Rappers_faces/dr-dre.png", "./Rappers_faces/drake.png", "./Rappers_faces/kanye.png", "./Rappers_faces/ll-cool-j.png"]
+    var imgrapper = ["./Rappers_faces/nas.png", "./Rappers_faces/wiz_khalifa.png", "./Rappers_faces/2chainz.png", "./Rappers_faces/50cent.png", "./Rappers_faces/Ice_T.png", "./Rappers_faces/lil.png", "./Rappers_faces/mchammer.png", "./Rappers_faces/biggie.png", "./Rappers_faces/jay_z.png", "./Rappers_faces/ice_cube.png", "./Rappers_faces/tupac.png", "./Rappers_faces/dr-dre.png", "./Rappers_faces/drake.png", "./Rappers_faces/kanye.png", "./Rappers_faces/ll-cool-j.png"]
     var imgrapperwidth = 100;
     var imgrapperheight = 100;
     // var gameOverNotify = document.querySelector('.game-over-notify')
@@ -41,13 +47,14 @@ window.onload = function () {
         console.log("Playing " + audio.src + ", for: " + audio.duration + "seconds.");
         audio.play();
         console.log("audio.duration", audio.duration)
-        // todo real end time
         weedTime = audio.duration - 2;
         console.log("weedTime", weedTime)
     };
 
     function updateCanvas() {
+        
         ctx.clearRect(0, 0, innerWidth, innerHeight);
+        drawBg();
         frameCounter++;
 
         for (var i = 0; i < rapperArray.length; i++) {
@@ -90,25 +97,26 @@ window.onload = function () {
                     { x: snoop.x, y: snoop.y, width: snoop.width, height: snoop.height },
                     { x: rapper.x, y: rapper.y, width: rapper.width, height: rapper.height },
                 )
-            ) { 
+            ) {
                 if (rapper == weed) {
                     if (audio.currentTime == weedTime) {
-
+                        alert("win")
                     } else {
                         alert("game over")
-                    }                                
+                    }
                 }
-                rapperArray.splice(i, 1) 
+                rapperArray.splice(i, 1)
             };
-        }  
+        }
+
 
         // console.log('audio.currentTime', audio.currentTime, weedTime)
-        ctx.drawImage(snoop.img, snoop.x, snoop.y, snoop.width, snoop.height)        
+        ctx.drawImage(snoop.img, snoop.x, snoop.y, snoop.width, snoop.height)
 
-        //ctx.strokeStyle = "green";
-        //ctx.lineWidth = 10;
-        //ctx.strokeRect(0, 0, 1390, 700)
-
+        // BORDERS 
+        ctx.strokeStyle = "green";
+        ctx.lineWidth = 15;
+        ctx.strokeRect(0, 0, 1440, 720)
 
         window.requestAnimationFrame(updateCanvas);
 
@@ -158,3 +166,4 @@ function intersect(a, b) {
         imgAT > imgBB ||
         imgAB < imgBT)
 }
+

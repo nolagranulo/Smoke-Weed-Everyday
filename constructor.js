@@ -10,7 +10,7 @@ class Rapper {
         this.dx = 1;
         this.dy = 1;
     }
-    
+
     rightBorder() {
         return this.x + this.width
     }
