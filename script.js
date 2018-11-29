@@ -5,7 +5,6 @@ window.onload = function () {
     var innerHeight = 720;
     canvas.width = innerWidth;
     canvas.height = innerHeight;
-    var gameover = false;
 
     var bgImg = new Image();
     bgImg.src = './css/smokeWeed.png';
@@ -13,9 +12,6 @@ window.onload = function () {
     function drawBg(){
         bgImg.onload = ctx.drawImage(bgImg,0,0, canvas.width,canvas.height);
     }
-
-
-
 
     var snoop = new Rapper("./Rappers_faces/snoop.png", window.innerWidth - 100, window.innerHeight - 100, 100, 100);
     var weed = new Rapper("./Rappers_faces/weed.png", 0, 0, 100, 100)
@@ -43,13 +39,13 @@ window.onload = function () {
     var audio = new Audio('audio/track.mp3');
     var weedTime;
 
-    audio.onloadedmetadata = function () {
-        console.log("Playing " + audio.src + ", for: " + audio.duration + "seconds.");
-        audio.play();
-        console.log("audio.duration", audio.duration)
-        weedTime = audio.duration - 2;
-        console.log("weedTime", weedTime)
-    };
+    //audio.onloadedmetadata = function () {
+        //console.log("Playing " + audio.src + ", for: " + audio.duration + "seconds.");
+        //audio.play();
+        //console.log("audio.duration", audio.duration)
+        //weedTime = audio.duration - 2;
+        //console.log("weedTime", weedTime)
+    //};
 
     function updateCanvas() {
         
@@ -126,6 +122,11 @@ window.onload = function () {
     window.addEventListener("keydown", (e) => {
         console.log(e.keyCode);
 
+        if (e.keyCode == 32) {
+            console.log('usic');
+            audio.play();
+        }
+
         if (e.keyCode == 38) {
             console.log("You pressed UP!");
             snoop.y -= 10;
@@ -139,7 +140,6 @@ window.onload = function () {
             console.log("You pressed RIGHT!");
             snoop.x += 10;
         }
-
     })
 }
 
